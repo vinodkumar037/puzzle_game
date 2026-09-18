@@ -11,7 +11,6 @@ def generate_node(state):
             rows=state["rows"],
             columns=state["columns"],
             difficulty=state["difficulty"],
-            level_number=level_number
         )
         levels.append(level)
 

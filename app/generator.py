@@ -27,8 +27,7 @@ def _get_structured_llm():
 def generate_level(
         rows: int,
         columns: int,
-        difficulty: str,
-        level_number: int
+        difficulty: str
 ):
     from app.prompts import build_generation_prompt
     from app.rules import get_difficulty_roles
@@ -40,7 +39,6 @@ def generate_level(
         rows=rows,
         columns=columns,
         difficulty=difficulty,
-        level_number=level_number,
         rules=rules,
     )
 

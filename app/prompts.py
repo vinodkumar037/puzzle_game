@@ -2,7 +2,6 @@ def build_generation_prompt(
     rows: int,
     columns: int,
     difficulty: str,
-    level_number: int,
     rules: dict,
 ) -> str:
 
@@ -10,7 +9,6 @@ def build_generation_prompt(
 Generate ONE arithmetic puzzle level.
 
 Level number:
-{level_number}
 
 Grid dimensions:
 {rows} rows × {columns} columns
