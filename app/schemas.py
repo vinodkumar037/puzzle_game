@@ -40,7 +40,7 @@ class Equation(BaseModel):
 
 
 class Level(BaseModel):
-    level: Literal["eassy", "medium", "hard"]
+    level: Literal["easy", "medium", "hard"]
     rows: int
     columns: int
 

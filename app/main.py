@@ -19,6 +19,7 @@
 # if __name__ == "__main__":
 #     main()
 
+import os
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 from typing import Literal
@@ -40,7 +41,9 @@ class GeneratePuzzleRequest(BaseModel):
 
 # Response schema
 class GeneratePuzzleResponse(BaseModel):
-    requested: int
+    target_count: int
+    valid_count: int
+    attempts: int
     levels: list[Level]
 
 @app.get("/")
@@ -59,15 +62,20 @@ def generate_puzzle(request: GeneratePuzzleRequest):
     }
 
     try:
-        result =  puzzle_graph.invoke(initial_state)
+        result = puzzle_graph.invoke(initial_state)
+        valid_levels = result.get("levels", [])
+        target_count = int(os.getenv("NUMBER_OF_LEVELS", "10"))
 
         return {
-            "levels": result["levels"],
+            "target_count": target_count,
+            "valid_count": len(valid_levels),
+            "attempts": result.get("generation_attempts", 1),
+            "levels": valid_levels,
         }
-
-
     except Exception as e:
         raise HTTPException(
             status_code=500,
             detail=f"Puzzle generation failed: {str(e)}",
         )
+
+
