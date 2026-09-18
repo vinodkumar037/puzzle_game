@@ -44,8 +44,6 @@ def generate_level(
 
     structured_llm = _get_structured_llm()
     result = structured_llm.invoke(prompt)
-    # from pprint import pprint
-    # pprint(result)
     if not isinstance(result, Level):
         return Level.model_validate(result)
     return result

@@ -1,24 +1,3 @@
-# from app.generator import generate_level
-# from app.nodes import generate_node
-
-# def main():
-
-#     state = {
-#         "rows": 5,
-#         "columns": 5,
-#         "difficulty": "easy"
-#     }
-
-#     result = generate_node(state)
-#     levels = result["levels"]
-
-#     for level in levels:
-#         print(level.model_dump_json(indent=2))
-
-
-# if __name__ == "__main__":
-#     main()
-
 import os
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
@@ -36,8 +15,8 @@ app = FastAPI(
 # Request schema
 class GeneratePuzzleRequest(BaseModel):
     difficulty: Literal["easy", "medium", "hard"]
-    rows: int = Field(ge=3, le=20)
-    columns: int = Field(ge=3, le=20)
+    rows: int = Field(ge=5, le=20)
+    columns: int = Field(ge=5, le=20)
 
 # Response schema
 class GeneratePuzzleResponse(BaseModel):

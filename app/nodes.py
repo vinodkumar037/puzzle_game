@@ -89,34 +89,3 @@ def save_node(state):
     return {
         "levels": valid_levels
     }
-
-# def save_node(state):
-#     valid_levels = state.get("levels") or []
-#     target_count = int(os.getenv("NUMBER_OF_LEVELS", "10"))
-
-#     # Do not save an incomplete batch.
-#     # if len(valid_levels) < target_count:
-#     #     raise ValueError(
-#     #         f"Cannot save: generated {len(valid_levels)}/{target_count} levels."
-#     #     )
-
-#     # Final validation before writing to the database.
-#     for index, level in enumerate(valid_levels):
-#         errors = validate_level_logic(level)
-#         if errors:
-#             raise ValueError(
-#                 f"Cannot save invalid level {index + 1}: {'; '.join(errors)}"
-#             )
-
-#     saved_count = 0
-
-#     for level in valid_levels:
-#         if save_level_to_db(level):
-#             saved_count += 1
-
-#     print(f"[Save Node] Saved {saved_count}/{len(valid_levels)} levels to MongoDB.")
-
-#     return {"levels": valid_levels}
-
-
-

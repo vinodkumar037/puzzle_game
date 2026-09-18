@@ -47,9 +47,3 @@ class Level(BaseModel):
     cells: list[Cell]
     equations: list[Equation]
     numberTiles: list[int]
-
-
-class PuzzleRequest(BaseModel):
-    rows: int = Field(ge=3, le=20)
-    columns: int = Field(ge=3, le=20)
-    difficulty: Literal["easy", "medium", "hard"] = Field(..., description="Difficulty level of the puzzle")

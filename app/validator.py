@@ -51,7 +51,7 @@ def validate_level_logic(level: Level) -> list[str]:
         elif cell.type == CellType.EQUALS:
             if cell.value != -1 or cell.solution != -1:
                 errors.append(f"EQUALS Cell at ({cell.row}, {cell.column}) must have value = -1 and solution = -1.")
-            if cell.text != "=":
+            if cell.text.strip() != "=":
                 errors.append(f"EQUALS Cell at ({cell.row}, {cell.column}) invalid text '{cell.text}'. Must be strictly '='.")
         else:
             errors.append(f"Cell at ({cell.row}, {cell.column}) has unknown type '{cell.type}'.")
