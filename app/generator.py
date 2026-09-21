@@ -43,8 +43,6 @@ def generate_level(
         excluded_puzzles=excluded_puzzles,
     )
 
-    print(f"=====================================prompt===================================\n{prompt}")
-
 
     structured_llm = _get_structured_llm()
     result = structured_llm.invoke(prompt)

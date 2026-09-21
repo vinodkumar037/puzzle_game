@@ -31,7 +31,6 @@ def generate_node(state):
                     excluded_puzzles=excluded_puzzles,
                 )
                 candidates.append(level)
-                print(f"=====================================candidates========================{level}")
             except Exception as e:
                 raise RuntimeError(f"Level generation failed: {e}") from e
 

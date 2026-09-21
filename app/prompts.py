@@ -106,9 +106,7 @@ def build_generation_prompt(
         Do not reproduce any listed puzzle or its equation pattern.
         Generate a different valid puzzle.
 
-        ==================================================
         1. GRID AND CELL RULES
-        ==================================================
 
         The grid is sparse. Do not create cells for unused positions.
 
@@ -156,9 +154,7 @@ def build_generation_prompt(
         Before returning the level, inspect every cell with type=4.
         For each one, verify that text == "=".
 
-        ==================================================
         2. EQUATION RULES
-        ==================================================
 
         Every equation must reference existing cells.
 
@@ -184,9 +180,7 @@ def build_generation_prompt(
         Do not create equations with missing referenced cells.
         Do not use an operator or equals cell as an operand or result.
 
-        ==================================================
         3. NUMBER TILES — CRITICAL
-        ==================================================
 
         numberTiles is the list of answer tiles available to the player
         for filling ALL EMPTY cells.
@@ -218,9 +212,7 @@ def build_generation_prompt(
         answers plus the required number of extra, non-negative tiles.
         Never replace or omit a correct answer with a distractor.
 
-        ==================================================
         4. FINAL SELF-CHECK
-        ==================================================
 
         Before returning the level, verify:
 
