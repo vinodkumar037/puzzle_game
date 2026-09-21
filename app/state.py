@@ -11,6 +11,11 @@ class PuzzleState(TypedDict, total=False):
     generation_attempts: int
     max_attempts: int
 
+    # Memory fields across iterations
+    seen_fingerprints: list[str]
+    excluded_puzzles: list[str]  # Summaries of puzzles LLM should avoid
+
+
 
 
 

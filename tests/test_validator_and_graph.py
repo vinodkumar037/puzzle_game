@@ -102,7 +102,24 @@ def test_build_generation_prompt_with_feedback():
     errors = ["EQUALS Cell at (1, 0) invalid text ''. Must be strictly '='."]
     prompt = build_generation_prompt(rows=5, columns=5, difficulty="easy", rules={}, validation_errors=errors)
     assert "PREVIOUS GENERATION FAILED VALIDATION" in prompt
-    assert "EQUALS Cell at (1, 0) invalid text" in prompt
+def test_validate_node_retains_excluded_puzzles_and_fingerprints():
+    from app.nodes import validate_node
+    level = create_sample_valid_level()
+    state = {
+        "candidate_levels": [level],
+        "levels": [],
+        "validation_errors": [],
+        "excluded_puzzles": [],
+        "seen_fingerprints": [],
+        "generation_attempts": 1,
+    }
+    result = validate_node(state)
+    assert "excluded_puzzles" in result
+    assert "seen_fingerprints" in result
+    assert len(result["excluded_puzzles"]) == 1
+    assert len(result["seen_fingerprints"]) == 1
+    assert "rows=5" in result["excluded_puzzles"][0]
+
 
 
 

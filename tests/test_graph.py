@@ -9,23 +9,23 @@ if str(project_root) not in sys.path:
 
 from app.graph import puzzle_graph
 
-initial_state = {
-    "rows": 3,
-    "columns": 3,
-    "difficulty": "easy"
-}
+if __name__ == "__main__":
+    initial_state = {
+        "rows": 3,
+        "columns": 3,
+        "difficulty": "easy"
+    }
 
+    result = puzzle_graph.invoke(initial_state)
 
-result = puzzle_graph.invoke(initial_state)
+    print("\n===== GRAPH RESULT =====")
+    pprint(result)
 
-print("\n===== GRAPH RESULT =====")
-pprint(result)
+    print("\n===== GENERATED LEVELS =====")
+    pprint(result.get("levels", []))
 
-print("\n===== GENERATED LEVELS =====")
-pprint(result.get("levels", []))
+    print("\n===== VALIDATION ERRORS =====")
+    pprint(result.get("validation_errors", []))
 
-print("\n===== VALIDATION ERRORS =====")
-pprint(result.get("validation_errors", []))
-
-print("\n===== GENERATION ATTEMPTS =====")
-print(result.get("generation_attempts"))
+    print("\n===== GENERATION ATTEMPTS =====")
+    print(result.get("generation_attempts"))

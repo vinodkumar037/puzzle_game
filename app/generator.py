@@ -30,6 +30,7 @@ def generate_level(
         columns: int,
         difficulty: str,
         validation_errors: list[str] | None = None,
+        excluded_puzzles: list[str] | None = None,
 ):
     rules = get_difficulty_roles(difficulty)
 
@@ -39,11 +40,16 @@ def generate_level(
         difficulty=difficulty,
         rules=rules,
         validation_errors=validation_errors,
+        excluded_puzzles=excluded_puzzles,
     )
+
+    print(f"=====================================prompt===================================\n{prompt}")
 
 
     structured_llm = _get_structured_llm()
     result = structured_llm.invoke(prompt)
+
     if not isinstance(result, Level):
         return Level.model_validate(result)
+    
     return result

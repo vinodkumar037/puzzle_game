@@ -43,44 +43,12 @@ IMPORTANT:
 """
 
 EQUALS_SIGN_ENFORCEMENT = """
-==================================================
-CRITICAL RULE — EQUALS CELL TEXT — READ CAREFULLY
-==================================================
-
-There is EXACTLY ONE valid value for the "text" field of any cell
-where type = 4 (EQUALS):
-
-    text = "="
-
-That is the character '=', repeated ONCE. Nothing else. Ever.
-
-THE FOLLOWING VALUES ARE ALL INVALID AND WILL BE REJECTED:
-    "=="        <- WRONG (two characters)
-    "1"         <- WRONG (a digit, not a sign)
-    " = "       <- WRONG (extra whitespace)
-    " "         <- WRONG (blank)
-    ""          <- WRONG (empty)
-    "eq"        <- WRONG
-    "equals"    <- WRONG
-    "-"         <- WRONG (this is a minus sign, not equals)
-
-Do NOT confuse the EQUALS cell with the OPERATOR cell.
-    - OPERATOR (type=3) text is one of: "+" "-" "*" "/"
-    - EQUALS   (type=4) text is ALWAYS exactly: "="
-These are two different cell types. Never write operator
-characters into an EQUALS cell, and never write "=" into an
-OPERATOR cell.
-
-MANDATORY SELF-CHECK — perform this before writing your final answer:
-    1. List every cell you created where type = 4.
-    2. For each one, read its "text" value out loud (internally).
-    3. Ask: "Is this exactly the single character '='?"
-    4. If it is anything else — fix it now, before responding.
-    5. Do not submit a level with an unchecked type=4 cell.
-
-If you are not placing an EQUALS cell in this grid at all, that is
-fine — but if you DO include one, it must pass the check above.
+CRITICAL RULE FOR EQUALS CELLS (type=4):
+- An EQUALS cell (type=4) represents the "=" symbol sign between equation operands and the result. Its text MUST be strictly "=" (e.g. text="=").
+- NEVER place numerical values (such as "10", "5", etc.) into an EQUALS cell (type=4). Numerical values belong in NUMBER (type=1) or EMPTY (type=2) cells.
+- Sparse grid rule: Generate between 5 and 25 cells in total for the grid. Do not duplicate cell coordinates or repeat cell objects.
 """
+
 
 def build_generation_prompt(
     rows: int,
@@ -88,6 +56,7 @@ def build_generation_prompt(
     difficulty: str,
     rules: dict,
     validation_errors: list[str] | None = None,
+    excluded_puzzles: list[str] | None = None,
 ) -> str:
 
     feedback_section = ""
@@ -107,6 +76,14 @@ def build_generation_prompt(
             Regenerate the ENTIRE level and recheck every field.
             """
 
+    excluded_puzzles = excluded_puzzles or []
+
+    excluded_text = (
+        "\n".join(f" - {puzzle}" for puzzle in excluded_puzzles)
+        if excluded_puzzles
+        else "None"
+    )
+
     return f"""
         You are generating ONE valid arithmetic puzzle level.
 
@@ -122,6 +99,13 @@ def build_generation_prompt(
         {feedback_section}
 
         {EQUALS_SIGN_ENFORCEMENT}
+
+        PREVIOUSLY GENERATED PUZZLES TO AVOID:
+        {excluded_text}
+
+        Do not reproduce any listed puzzle or its equation pattern.
+        Generate a different valid puzzle.
+
         ==================================================
         1. GRID AND CELL RULES
         ==================================================
@@ -142,7 +126,7 @@ def build_generation_prompt(
         - solution must be -1
 
         EMPTY (type=2):
-        - text must be exactly ""
+        - text must be strictly ""
         - value must be -1
         - solution must be the correct answer, >= 0
 
@@ -152,7 +136,7 @@ def build_generation_prompt(
         - solution must be -1
 
         EQUALS (type=4):
-        - text must be exactly "="
+        - text must be strictly "="
         - value must be -1
         - solution must be -1
 
